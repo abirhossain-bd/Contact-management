@@ -13,27 +13,28 @@ class ContactController extends Controller
      * Display a listing of the resource.
      */
     public function index(Request $request)
-{
-    $user = Auth::user();
-    if (!$user) {
-        return redirect()->route('login');
+    {
+        $user = Auth::user();
+        if (!$user) {
+            return redirect()->route('login');
+        }
+
+        $search = $request->input('search', null);
+
+        $users = Contact::where('user_id', Auth::id()) // ensure only logged-in user's data
+                    ->when($search, function ($query) use ($search) {
+                        $query->where(function ($q) use ($search) {
+                            // Concatenate first_name and last_name for the search
+                            $q->whereRaw("CONCAT(first_name, ' ', last_name) LIKE ?", ['%' . $search . '%'])
+                              ->orWhere('email', 'like', '%' . $search . '%')
+                              ->orWhere('mobile', 'like', '%' . $search . '%');
+                        });
+                    })
+                    ->paginate(10);
+
+        return view('contact.list', compact('users', 'search'));
     }
 
-    $search = $request->input('search', null);
-
-    $users = Contact::where('user_id', Auth::id()) // ensure only logged-in user's data
-                ->when($search, function ($query) use ($search) {
-                    $query->where(function ($q) use ($search) {
-                        $q->where('first_name', 'like', '%' . $search . '%')
-                          ->orWhere('last_name', 'like', '%' . $search . '%')
-                          ->orWhere('email', 'like', '%' . $search . '%')
-                          ->orWhere('mobile', 'like', '%' . $search . '%');
-                    });
-                })
-                ->paginate(10);
-
-    return view('contact.list', compact('users', 'search'));
-}
 
 
     /**
