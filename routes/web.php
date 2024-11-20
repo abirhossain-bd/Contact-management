@@ -19,26 +19,26 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('auth.login');
-});
+})->name('login');
 
 
 
-Route::get('register',[RegisterController::class,'register']);
-Route::post('register_post',[RegisterController::class,'signup']);
-Route::post('login',[LoginController::class,'signin']);
-Route::get('logout',[LoginController::class,'logout']);
+Route::get('register',[RegisterController::class,'register'])->name('register');
+Route::post('user_register',[RegisterController::class,'signup'])->name('user.register');
+Route::post('login',[LoginController::class,'signin'])->name('user.login');
+Route::get('logout',[LoginController::class,'logout'])->name('logout');
 
 
-Route::get('/home',[HomeController::class,'index']);
+Route::get('/home',[HomeController::class,'index'])->name('home');
 
 
 Route::prefix('contact/')->group(function () {
-    Route::get('list',[ContactController::class,'index']);
-    Route::get('create',[ContactController::class,'create']);
-    Route::post('store',[ContactController::class,'store']);
-    Route::get('edit/{id}',[ContactController::class,'edit']);
-    Route::post('update/{id}',[ContactController::class,'update']);
-    Route::get('delete/{id}',[ContactController::class,'destroy']);
-    Route::get('show/{id}',[ContactController::class,'show']);
+    Route::get('list',[ContactController::class,'index'])->name('contact.list');
+    Route::get('create',[ContactController::class,'create'])->name('contact.create');
+    Route::post('store',[ContactController::class,'store'])->name('contact.store');
+    Route::get('edit/{id}',[ContactController::class,'edit'])->name('contact.edit');
+    Route::post('update/{id}',[ContactController::class,'update'])->name('contact.update');
+    Route::get('delete/{id}',[ContactController::class,'destroy'])->name('contact.delete');
+    Route::get('show/{id}',[ContactController::class,'show'])->name('contact.show');
 
 });

@@ -13,23 +13,28 @@ class ContactController extends Controller
      * Display a listing of the resource.
      */
     public function index(Request $request)
-    {
-        $user = Auth::user();
-        if (!$user) {
-            return redirect('/');
-        }
-        $users = Contact::where('user_id',Auth::id())->paginate(10);
-        $search = $request->input('search',null);
-        if($search){
-            $users= Contact::where('first_name','like','%'.$search.'%')
-                        ->orWhere('last_name','like','%'.$search.'%')
-                        ->orWhere('email','like','%'.$search.'%')
-                        ->orWhere('mobile','like','%'.$search.'%')
-                        ->where('user_id',Auth::id())
-                        ->paginate(10);
-        }
-        return view('contact.list',compact('users','search'));
+{
+    $user = Auth::user();
+    if (!$user) {
+        return redirect()->route('login');
     }
+
+    $search = $request->input('search', null);
+
+    $users = Contact::where('user_id', Auth::id()) // ensure only logged-in user's data
+                ->when($search, function ($query) use ($search) {
+                    $query->where(function ($q) use ($search) {
+                        $q->where('first_name', 'like', '%' . $search . '%')
+                          ->orWhere('last_name', 'like', '%' . $search . '%')
+                          ->orWhere('email', 'like', '%' . $search . '%')
+                          ->orWhere('mobile', 'like', '%' . $search . '%');
+                    });
+                })
+                ->paginate(10);
+
+    return view('contact.list', compact('users', 'search'));
+}
+
 
     /**
      * Show the form for creating a new resource.
@@ -38,7 +43,7 @@ class ContactController extends Controller
     {
         $user = Auth::user();
         if (!$user) {
-            return redirect('/');
+            return redirect()->route('login');
         }
         return view('contact.create');
     }
@@ -51,7 +56,7 @@ class ContactController extends Controller
 
         $user = Auth::user();
         if (!$user) {
-            return redirect('/');
+            return redirect()->route('login');
         }
         Contact::create([
             'user_id' => Auth::id(),
@@ -61,7 +66,7 @@ class ContactController extends Controller
             'mobile' => $request->mobile,
             'created_at' => now(),
         ]);
-        return redirect('contact/list')->with('success','New contact created successfully!');
+        return redirect()->route('contact.list')->with('success','New contact created successfully!');
     }
 
     /**
@@ -71,7 +76,7 @@ class ContactController extends Controller
     {
         $user = Auth::user();
         if (!$user) {
-            return redirect('/');
+            return redirect()->route('login');
         }
         $contacts = Contact::find($id);
         return view('contact.show',compact('contacts'));
@@ -84,7 +89,7 @@ class ContactController extends Controller
     {
         $user = Auth::user();
         if (!$user) {
-            return redirect('/');
+            return redirect()->route('login');
         }
         $contacts = Contact::where('id',$id)->first();
         return view('contact.edit',compact('contacts'));
@@ -97,7 +102,7 @@ class ContactController extends Controller
     {
         $user = Auth::user();
         if (!$user) {
-            return redirect('/');
+            return redirect()->route('login');
         }
         Contact::find($id)->update([
             'first_name' => $request->first_name,
@@ -106,7 +111,7 @@ class ContactController extends Controller
             'mobile' => $request->mobile,
             'updated_at' => now(),
         ]);
-        return redirect('contact/list')->with('success','Contact updated successfully!');
+        return redirect()->route('contact.list')->with('success','Contact updated successfully!');
     }
 
     /**
@@ -116,9 +121,9 @@ class ContactController extends Controller
     {
         $user = Auth::user();
         if (!$user) {
-            return redirect('/');
+            return redirect()->route('login');
         }
         Contact::find($id)->delete();
-        return redirect('contact/list')->with('success','Contact Deleted Successfully!');
+        return redirect()->route('contact.list')->with('success','Contact Deleted Successfully!');
     }
 }

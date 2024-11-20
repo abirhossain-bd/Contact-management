@@ -49,7 +49,7 @@
 
 
 
-                                        <form action="{{ url('contact/update/'.$contacts->id) }}" method="POST">
+                                        <form action="{{ route('contact.update',$contacts->id) }}" method="POST">
                                             @csrf
 
                                             <b>Edit your contact</b>

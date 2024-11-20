@@ -13,13 +13,13 @@
         <div class="row">
             <div class="col-6">
                 <div class=" mb-2">
-                    <a href="{{ url('home') }}" class="btn btn-success">Home</a>
-                    <a href="{{ url('contact/create') }}" class="btn btn-primary">Add Contact</a>
+                    <a href="{{ route('home') }}" class="btn btn-success">Home</a>
+                    <a href="{{ route('contact.create') }}" class="btn btn-primary">Add Contact</a>
 
                 </div>
             </div>
             <div class="col-6">
-                <form action="{{ url('contact/list') }}" >
+                <form action="{{ route('contact.list') }}" >
                     <div class="row">
                         <div class="col-8" >
                             <input type="text" name="search" class="form-control" placeholder="Search here.." value="{{ $search }}">
@@ -52,9 +52,9 @@
                             <td>{{ $user->email }}</td>
                             <td>{{ $user->mobile }}</td>
                             <td>
-                                <a href="{{ url('contact/show/'.$user->id) }}" class="btn btn-success" href="">Show</a>
-                                <a href="{{ url('contact/edit/'.$user->id) }}" class="btn btn-primary" href="">Edit</a>
-                                <a href="{{ url('contact/delete/'.$user->id) }}" class="btn btn-danger" href="">Delete</a>
+                                <a href="{{ route('contact.show',$user->id) }}" class="btn btn-success" href="">Show</a>
+                                <a href="{{ route('contact.edit',$user->id) }}" class="btn btn-primary" href="">Edit</a>
+                                <a href="{{ route('contact.delete',$user->id) }}" class="btn btn-danger" href="">Delete</a>
                             </td>
                         </tr>
                     @endforeach

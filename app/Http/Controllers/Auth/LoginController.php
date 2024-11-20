@@ -17,7 +17,7 @@ class LoginController extends Controller
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
 
-            return redirect('home')->with('success','User login successful');
+            return redirect()->route('home')->with('success','User login successful');
         }
 
         return back()->with('error','Credential does not match!');
@@ -25,6 +25,6 @@ class LoginController extends Controller
 
     public function logout(){
         Auth::logout();
-        return redirect('/')->with('success','Logout Successfully');
+        return redirect()->route('login')->with('success','Logout Successfully');
     }
 }

@@ -49,7 +49,7 @@
 
 
 
-                                        <form action="{{ url('contact/store') }}" method="POST">
+                                        <form action="{{ route('contact.store') }}" method="POST">
                                             @csrf
 
                                             <p>Please Create your contact</p>

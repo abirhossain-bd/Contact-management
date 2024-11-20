@@ -54,7 +54,7 @@
                                             <h4 class="mt-1 mb-5 pb-1">We are The Lotus Team</h4>
                                         </div>
 
-                                        <form action="{{ url('login') }}" method="POST">
+                                        <form action="{{ route('user.login') }}" method="POST">
                                             @csrf
                                             <p>Please login to your account</p>
 
@@ -85,7 +85,7 @@
 
                                             <div class="d-flex align-items-center justify-content-center pb-4">
                                                 <p class="mb-0 me-2">Don't have an account?</p>
-                                                <a href="{{ url('register') }}" class="btn btn-outline-danger">Create
+                                                <a href="{{ route('register') }}" class="btn btn-outline-danger">Create
                                                     new</a>
                                             </div>
 

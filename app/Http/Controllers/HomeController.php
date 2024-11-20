@@ -10,7 +10,7 @@ class HomeController extends Controller
     public function index(){
         $user = Auth::user();
         if (!$user) {
-            return redirect('/');
+            return redirect()->route('login');
         }
         return view('home',compact('user'));
     }

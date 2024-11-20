@@ -17,8 +17,8 @@
               <p class="card-text"><b>Interested In:</b> {{ $contacts->hoby }}</p>
               <p class="card-text"><b>Email:</b> {{ $contacts->email }}</p>
               <p class="card-text"><b>Mobile:</b> {{ $contacts->mobile }}</p>
-              <a href="{{ url('contact/list') }}" class="btn btn-primary">Back</a>
-              <a href="{{ url('contact/delete/'.$contacts->id) }}" class="btn btn-danger">Delete</a>
+              <a href="{{ route('contact.list') }}" class="btn btn-primary">Back</a>
+              <a href="{{ route('contact.delete',$contacts->id) }}" class="btn btn-danger">Delete</a>
             </div>
           </div>
 

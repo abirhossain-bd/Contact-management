@@ -44,7 +44,7 @@ class RegisterController extends Controller
                 'city_id' => $request->city_id,
                 'created_at' => now(),
             ]);
-            return redirect('/')->with('success','Registered Successfully');
+            return redirect()->route('login')->with('success','Registered Successfully');
 
         }else{
             User::create([
@@ -58,7 +58,7 @@ class RegisterController extends Controller
                 'city_id' => $request->city_id,
                 'created_at' => now(),
             ]);
-            return redirect('/')->with('success','Registered Successfully');
+            return redirect()->route('login')->with('success','Registered Successfully');
         }
     }
 }

@@ -53,7 +53,7 @@
                                             <h4 class="mt-1 mb-5 pb-1">We are The Lotus Team</h4>
                                         </div>
 
-                                        <form action="{{ url('register_post') }}" method="POST"
+                                        <form action="{{ route('user.register') }}" method="POST"
                                             enctype="multipart/form-data">
                                             @csrf
                                             <p>Please register your account</p>
@@ -61,7 +61,7 @@
                                             <div data-mdb-input-init class="form-outline mb-4">
                                                 <label class="form-label" for="form2Example11">First Name</label>
                                                 <input name="first_name" type="text" class="form-control"
-                                                    placeholder="Enter First Name..." />
+                                                    placeholder="Enter First Name..." value="{{old('first_name')}}" />
                                                 @error('first_name')
                                                     <div class="alert alert-danger">{{ $message }}</div>
                                                 @enderror
@@ -69,7 +69,7 @@
                                             <div data-mdb-input-init class="form-outline mb-4">
                                                 <label class="form-label" for="form2Example11">Last Name</label>
                                                 <input name="last_name" type="text" class="form-control"
-                                                    placeholder="Enter Last Name..." />
+                                                    placeholder="Enter Last Name..." value="{{old('last_name')}}" />
                                                 @error('last_name')
                                                     <div class="alert alert-danger">{{ $message }}</div>
                                                 @enderror
@@ -77,7 +77,7 @@
                                             <div data-mdb-input-init class="form-outline mb-4">
                                                 <label class="form-label" for="form2Example11">Email</label>
                                                 <input name="email" type="email" class="form-control"
-                                                    placeholder="Enter your email.." />
+                                                    placeholder="Enter your email.." value="{{old('email')}}" />
                                                 @error('email')
                                                     <div class="alert alert-danger">{{ $message }}</div>
                                                 @enderror
@@ -94,7 +94,7 @@
                                             <div data-mdb-input-init class="form-outline mb-4">
                                                 <label class="form-label" for="form2Example22">Mobile No.</label>
                                                 <input name="mobile" type="number" class="form-control"
-                                                    placeholder="Enter mobile no " />
+                                                    placeholder="Enter mobile no " value="{{old('mobile')}}" />
                                                 @error('mobile')
                                                     <div class="alert alert-danger">{{ $message }}</div>
                                                 @enderror
@@ -138,7 +138,7 @@
 
                                             <div class="d-flex align-items-center justify-content-center pb-4">
                                                 <p class="mb-0 me-2">Already have an account?</p>
-                                                <a href="{{ url('/') }}" class="btn btn-outline-danger">Login</a>
+                                                <a href="{{ route('login') }}" class="btn btn-outline-danger">Login</a>
                                             </div>
 
                                         </form>
