@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ContactValidate;
+use App\Mail\SendOtp;
 use App\Models\Contact;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class ContactController extends Controller
 {
@@ -126,5 +128,17 @@ class ContactController extends Controller
         }
         Contact::find($id)->delete();
         return redirect()->route('contact.list')->with('success','Contact Deleted Successfully!');
+    }
+
+    public function senOtp($id){
+        $contacts = Contact::find($id);
+
+        $data =[
+            'otp' => rand(000000,999999),
+            'username' => $contacts->first_name. ' '. $contacts->last_name,
+        ];
+
+        Mail::to($contacts->email)->send(new SendOtp($data));
+        return back()->with('success','Mail has been sent');
     }
 }

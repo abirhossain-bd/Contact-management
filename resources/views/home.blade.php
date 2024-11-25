@@ -19,7 +19,7 @@
               <p class="card-text"><b>Interested In:</b> {{ $user->hoby }}</p>
               <p class="card-text"><b>Email:</b> {{ $user->email }}</p>
               <p class="card-text"><b>Mobile:</b> {{ $user->mobile }}</p>
-              <p class="card-text"><b>Mobile:</b> {{ $user->name }}</p>
+              <p class="card-text"><b>City:</b>{{ $user->city->name }}</p>
               <a href="{{ route('contact.create') }}" class="btn btn-primary">Add Contact</a>
               <a href="{{ route('contact.list') }}" class="btn btn-success">See Contact</a>
               <a href="{{ route('logout') }}" class="btn btn-danger">Logout</a>

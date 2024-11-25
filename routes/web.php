@@ -30,6 +30,7 @@ Route::get('logout',[LoginController::class,'logout'])->name('logout');
 
 
 Route::get('/home',[HomeController::class,'index'])->name('home');
+Route::get('/city_test',[HomeController::class,'city_test'])->name('city_test');
 
 
 Route::prefix('contact/')->group(function () {
@@ -40,5 +41,6 @@ Route::prefix('contact/')->group(function () {
     Route::post('update/{id}',[ContactController::class,'update'])->name('contact.update');
     Route::get('delete/{id}',[ContactController::class,'destroy'])->name('contact.delete');
     Route::get('show/{id}',[ContactController::class,'show'])->name('contact.show');
+    Route::get('send/otp/{id}',[ContactController::class,'senOtp'])->name('send.otp');
 
 });
