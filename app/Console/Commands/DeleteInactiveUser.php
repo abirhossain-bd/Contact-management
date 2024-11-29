@@ -2,7 +2,9 @@
 
 namespace App\Console\Commands;
 
+use App\Models\User;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Log;
 
 class DeleteInactiveUser extends Command
 {
@@ -25,9 +27,13 @@ class DeleteInactiveUser extends Command
      */
     public function handle()
     {
-        return;
-        
+        Log::info("------DeleteInactiveUser-----Run Successfully!");
+        $users = User::all();
 
+
+
+        Log::info(['users'=>'success']);
         // ekhane condition dite hobe j opertation calate cai tar,, jemon inactive user delete er jonno condition.
+        return;
     }
 }
