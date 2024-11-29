@@ -16,6 +16,8 @@ class ContactController extends Controller
      */
     public function index(Request $request)
     {
+
+
         $user = Auth::user();
         if (!$user) {
             return redirect()->route('login');
@@ -33,6 +35,11 @@ class ContactController extends Controller
                         });
                     })
                     ->paginate(10);
+
+        if ($request->ajax()) {
+
+            return view('contact.ajax_list', compact('users', 'search'));
+        }
 
         return view('contact.list', compact('users', 'search'));
     }
@@ -57,6 +64,7 @@ class ContactController extends Controller
     public function store(ContactValidate $request)
     {
 
+
         $user = Auth::user();
         if (!$user) {
             return redirect()->route('login');
@@ -69,7 +77,9 @@ class ContactController extends Controller
             'mobile' => $request->mobile,
             'created_at' => now(),
         ]);
-        return redirect()->route('contact.list')->with('success','New contact created successfully!');
+
+        return response()->json(['success'=>true]);
+        // return redirect()->route('contact.list')->with('success','New contact created successfully!');
     }
 
     /**
@@ -120,7 +130,7 @@ class ContactController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function delete(string $id)
     {
         $user = Auth::user();
         if (!$user) {
@@ -130,7 +140,20 @@ class ContactController extends Controller
         return redirect()->route('contact.list')->with('success','Contact Deleted Successfully!');
     }
 
-    public function senOtp($id){
+
+
+    public function destroy(Request $request)
+    {
+        $user = Auth::user();
+        if (!$user) {
+            return redirect()->route('login');
+        }
+        Contact::find($request->id)->delete();
+        return response()->json(['success'=>true])->with('success','Deleted');
+
+    }
+
+    public function otpsend($id){
         $contacts = Contact::find($id);
 
         $data =[
@@ -138,7 +161,7 @@ class ContactController extends Controller
             'username' => $contacts->first_name. ' '. $contacts->last_name,
         ];
 
-        Mail::to($contacts->email)->send(new SendOtp($data));
+        dispatch(new \App\Jobs\SendEmailJob($data));
         return back()->with('success','Mail has been sent');
     }
 }

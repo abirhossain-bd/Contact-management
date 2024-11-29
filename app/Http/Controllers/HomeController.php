@@ -36,4 +36,8 @@ class HomeController extends Controller
 
         dd($users->toArray());
     }
+
+    public function ajaxCall(Request $request){
+        return response()->json(['message'=>'Request send Successfully','status'=>'success']);
+    }
 }

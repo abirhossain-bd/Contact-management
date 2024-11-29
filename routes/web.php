@@ -31,6 +31,7 @@ Route::get('logout',[LoginController::class,'logout'])->name('logout');
 
 Route::get('/home',[HomeController::class,'index'])->name('home');
 Route::get('/city_test',[HomeController::class,'city_test'])->name('city_test');
+Route::post('/ajax/post',[HomeController::class,'ajaxCall'])->name('ajax.post');
 
 
 Route::prefix('contact/')->group(function () {
@@ -39,8 +40,9 @@ Route::prefix('contact/')->group(function () {
     Route::post('store',[ContactController::class,'store'])->name('contact.store');
     Route::get('edit/{id}',[ContactController::class,'edit'])->name('contact.edit');
     Route::post('update/{id}',[ContactController::class,'update'])->name('contact.update');
-    Route::get('delete/{id}',[ContactController::class,'destroy'])->name('contact.delete');
+    Route::get('delete/{id}',[ContactController::class,'delete'])->name('contact.delete');
+    Route::get('destroy',[ContactController::class,'destroy'])->name('contact.destroy'); //delete by ajax
     Route::get('show/{id}',[ContactController::class,'show'])->name('contact.show');
-    Route::get('send/otp/{id}',[ContactController::class,'senOtp'])->name('send.otp');
+    Route::get('send/otp/{id}',[ContactController::class,'otpsend'])->name('send.otp');
 
 });
